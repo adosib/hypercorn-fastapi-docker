@@ -7,6 +7,9 @@ use_ssl = os.getenv("USE_SSL", False)
 use_tcp = os.getenv("USE_TCP", True)
 # assert any([use_ssl, use_tcp]), "At least one of USE_SSL and USE_TCP must be set"
 
+# https://hypercorn.readthedocs.io/en/latest/discussion/http2.html#http-2
+alpn_protocols = os.getenv("ALPN", "h2")
+
 use_certfile = os.getenv("CERTFILE", None)
 use_ca_certs = os.getenv("CA_CERTS", None)
 use_ciphers = os.getenv("CIPHERS", "ECDHE+AESGCM")
@@ -94,6 +97,7 @@ if use_quic_bind:
 # conf/env data
 conf_data = {
     "accesslog": accesslog,
+    "alpn_protocols": alpn_protocols,
     "errorlog": errorlog,
     "loglevel": loglevel,
     "backlog": backlog,
